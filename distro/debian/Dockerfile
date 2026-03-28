@@ -4,14 +4,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Required for Homebrew to install non-interactively
 ENV NONINTERACTIVE=1
 
-# Minimal Homebrew prerequisites — distro-specific deps are handled by install.sh
-RUN apt-get update && apt-get install -y \
-    sudo git curl file procps \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user with passwordless sudo (mirrors WSL setup)
 RUN useradd -m -s /bin/bash testuser \
-    && echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+  && echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER testuser
 ENV USER=testuser

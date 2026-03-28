@@ -3,13 +3,11 @@ FROM fedora:40
 # Required for Homebrew to install non-interactively
 ENV NONINTERACTIVE=1
 
-# Minimal Homebrew prerequisites — distro-specific deps are handled by install.sh
-RUN dnf install -y sudo git curl file procps-ng \
-    && dnf clean all
+RUN dnf install -y sudo && dnf clean all
 
 # Create a non-root user with passwordless sudo (mirrors WSL setup)
 RUN useradd -m -s /bin/bash testuser \
-    && echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+  && echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 USER testuser
 ENV USER=testuser

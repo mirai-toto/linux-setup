@@ -1,5 +1,11 @@
 #!/bin/bash
 
+install_base_deps() {
+  echo "Installing base dependencies (Fedora/RHEL)..."
+  sudo dnf upgrade -y
+  sudo dnf install -y git curl file procps-ng
+}
+
 install_build_deps() {
   echo "Installing build tools (Fedora/RHEL)..."
   sudo dnf groupinstall -y "Development Tools"

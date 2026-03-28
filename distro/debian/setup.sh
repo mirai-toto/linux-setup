@@ -1,5 +1,12 @@
 #!/bin/bash
 
+install_base_deps() {
+  echo "Installing base dependencies (Debian/Ubuntu)..."
+  sudo apt-get update -qq
+  sudo apt-get upgrade -y
+  sudo apt-get install -y git curl file procps
+}
+
 install_build_deps() {
   echo "Installing build-essential (Debian/Ubuntu)..."
   sudo apt-get update -qq
