@@ -100,6 +100,7 @@ configure_wsl_terminal_profile() {
   wts profile font "$WSL_DISTRO_NAME" --face "DroidSansM Nerd Font Mono"
   wts profile opacity "$WSL_DISTRO_NAME" 80 --acrylic
   wts profile bell "$WSL_DISTRO_NAME" --disable
+  wts profile window "$WSL_DISTRO_NAME" --scrollbar hidden
   wts scheme apply "$WSL_DISTRO_NAME" "Dark+"
 }
 
