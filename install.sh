@@ -10,6 +10,7 @@ if [ -f "$DISTRO_SCRIPT" ]; then
   source "$DISTRO_SCRIPT"
 else
   echo "Unsupported distro: '${DISTRO_ID}'. Skipping distro-specific setup."
+  install_base_deps() { echo "Skipping base deps: unsupported distro."; }
   install_build_deps() { echo "Skipping build deps: unsupported distro."; }
   configure_locale() { echo "Skipping locale config: unsupported distro."; }
 fi
@@ -95,6 +96,7 @@ print_completion_message() {
 }
 
 # Main
+install_base_deps
 install_build_deps
 configure_locale
 setup_dotfiles
