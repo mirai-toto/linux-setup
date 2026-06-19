@@ -4,7 +4,7 @@ install_base_deps() {
   echo "Installing base dependencies (Debian/Ubuntu)..."
   sudo apt-get update -qq
   sudo apt-get upgrade -y
-  sudo apt-get install -y git curl file procps
+  sudo apt-get install -y git curl file procps gnome-keyring
 }
 
 install_build_deps() {

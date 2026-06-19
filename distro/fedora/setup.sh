@@ -3,7 +3,7 @@
 install_base_deps() {
   echo "Installing base dependencies (Fedora/RHEL)..."
   sudo dnf upgrade -y
-  sudo dnf install -y git curl file procps-ng
+  sudo dnf install -y git curl file procps-ng gnome-keyring
 }
 
 install_build_deps() {
