@@ -4,27 +4,6 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 source "$SCRIPT_DIR/distro/detect.sh"
 
-install_homebrew() {
-  echo "Installing Homebrew..."
-  if ! command -v brew &>/dev/null; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  else
-    echo "Homebrew is already installed."
-  fi
-
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-  if ! grep -q 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' ~/.profile; then
-    echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >>~/.profile
-    echo "Added Homebrew initialization to ~/.profile."
-  else
-    echo "Homebrew initialization already present in ~/.profile."
-  fi
-
-  if brew analytics state | grep -q "enabled"; then
-    brew analytics off
-  fi
-}
 
 DISTRO_SCRIPT="$SCRIPT_DIR/distro/${DISTRO_ID}/setup.sh"
 if [ -f "$DISTRO_SCRIPT" ]; then
@@ -36,13 +15,15 @@ else
 fi
 
 setup_dotfiles() {
-  if [ ! -d "$HOME/dotfiles" ]; then
+  local dotfiles_dir
+  dotfiles_dir="$(dirname "$SCRIPT_DIR")/dotfiles"
+  if [ ! -d "$dotfiles_dir" ]; then
     echo "Cloning dotfiles..."
-    git clone https://github.com/mirai-toto/dotfiles.git "$HOME/dotfiles"
+    git clone https://github.com/mirai-toto/dotfiles.git "$dotfiles_dir"
   else
     echo "dotfiles already cloned."
   fi
-  bash "$HOME/dotfiles/install.sh"
+  bash "$dotfiles_dir/install.sh"
 }
 
 install_npm_globals() {
@@ -116,7 +97,6 @@ print_completion_message() {
 # Main
 install_build_deps
 configure_locale
-install_homebrew
 setup_dotfiles
 install_npm_globals
 install_rust
