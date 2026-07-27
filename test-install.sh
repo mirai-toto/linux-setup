@@ -23,4 +23,4 @@ usage() {
 
 DISTRO="${1:-debian}"
 
-exec "$SCRIPT_DIR/dev-env.sh" "$DISTRO" "test-${DISTRO}" --rm
+exec "$SCRIPT_DIR/dev-env.sh" --distro "$DISTRO" --name "test-${DISTRO}" --rm
