@@ -90,6 +90,7 @@ if [ ! -f "$DOCKERFILE" ]; then
 fi
 
 VOLUME_ARGS=()
+VOLUME_PATHS=()
 for v in "${VOLUMES[@]}"; do
   host_path="${v%%:*}"
   if [[ "$v" == *:* ]]; then
@@ -99,14 +100,28 @@ for v in "${VOLUMES[@]}"; do
   fi
   host_path="$(realpath "$host_path")"
   VOLUME_ARGS+=(-v "${host_path}:${container_path}")
+  VOLUME_PATHS+=("$container_path")
 done
+
+# Bind mounts keep the host's ownership, which won't match testuser's uid
+# inside the container. Chown mounted paths to testuser right after creation,
+# then hand off to the default shell.
+DEFAULT_SHELL="/home/linuxbrew/.linuxbrew/bin/zsh"
+CREATE_CMD=()
+if [ ${#VOLUME_PATHS[@]} -gt 0 ]; then
+  CHOWN_CMD="sudo chown -R testuser:testuser"
+  for p in "${VOLUME_PATHS[@]}"; do
+    CHOWN_CMD+=" $(printf '%q' "$p")"
+  done
+  CREATE_CMD=(bash -c "$CHOWN_CMD && exec $DEFAULT_SHELL")
+fi
 
 if [ "$RM" = true ]; then
   echo "Building Docker image for $DISTRO_DIR..."
   docker build -t "$IMAGE_NAME" -f "$DOCKERFILE" "$SCRIPT_DIR"
 
   echo "Running container '$CONTAINER_NAME' (--rm)..."
-  docker run --rm -it --name "$CONTAINER_NAME" "${VOLUME_ARGS[@]}" "$IMAGE_NAME"
+  docker run --rm -it --name "$CONTAINER_NAME" "${VOLUME_ARGS[@]}" "$IMAGE_NAME" "${CREATE_CMD[@]}"
 elif docker container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
   if [ ${#VOLUMES[@]} -gt 0 ]; then
     echo "Warning: container '$CONTAINER_NAME' already exists; --volume is ignored (mounts are fixed at creation)."
@@ -118,5 +133,5 @@ else
   docker build -t "$IMAGE_NAME" -f "$DOCKERFILE" "$SCRIPT_DIR"
 
   echo "Creating container '$CONTAINER_NAME'..."
-  docker run -it --name "$CONTAINER_NAME" "${VOLUME_ARGS[@]}" "$IMAGE_NAME"
+  docker run -it --name "$CONTAINER_NAME" "${VOLUME_ARGS[@]}" "$IMAGE_NAME" "${CREATE_CMD[@]}"
 fi
