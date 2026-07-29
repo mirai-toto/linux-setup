@@ -1,4 +1,4 @@
-FROM ubuntu:26.04
+FROM ubuntu:26.04 AS base
 
 ENV DEBIAN_FRONTEND=noninteractive
 # Required for Homebrew to install non-interactively
@@ -23,7 +23,16 @@ USER testuser
 ENV USER=testuser
 WORKDIR /home/testuser
 
-COPY --chown=testuser:testuser . /home/testuser/linux-setup
-RUN cd /home/testuser/linux-setup && bash install.sh
+FROM base AS install
 
+COPY --chown=testuser:testuser . /home/testuser/linux-setup
+# never fails: exit code is recorded in the log, not propagated
+RUN cd /home/testuser/linux-setup \
+  && (bash install.sh 2>&1; echo "install.sh exit=$?") | tee /tmp/install.log
+
+FROM scratch AS logs
+COPY --from=install /tmp/install.log /
+
+FROM install AS final
+RUN test -x /home/linuxbrew/.linuxbrew/bin/zsh || { echo "zsh missing"; exit 1; }
 CMD ["/home/linuxbrew/.linuxbrew/bin/zsh"]
