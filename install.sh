@@ -41,6 +41,19 @@ install_rust() {
   fi
 }
 
+install_browser_tools() {
+  local browser_tools_dir
+  browser_tools_dir="$(dirname "$SCRIPT_DIR")/browser-tools"
+  echo "Installing browser-tools..."
+  if [ ! -d "$browser_tools_dir" ]; then
+    git clone https://github.com/mirai-toto/browser-tools.git "$browser_tools_dir"
+  else
+    echo "browser-tools already cloned."
+  fi
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$browser_tools_dir/browser-tools" "$HOME/.local/bin/btools"
+}
+
 install_wt_settings() {
   if [ -z "$WSL_DISTRO_NAME" ]; then
     echo "Not running inside WSL. Skipping wt-settings installation."
@@ -91,6 +104,7 @@ print_completion_message() {
   echo -e "\033[33mDon't forget to fill in:\033[0m"
   echo -e "  - \033[33m~/.gitconfig.local\033[0m  (git name and email)"
   echo -e "  - \033[33m~/.secrets\033[0m           (API keys and other secrets)"
+  echo -e "\033[33mTo enable browser MCP servers, run:\033[0m \033[33mbtools setup\033[0m"
   echo -e "\033[31mTo apply the changes:\033[0m"
   echo -e "- Close and reopen your terminal."
 }
@@ -102,6 +116,7 @@ configure_locale
 setup_dotfiles
 install_npm_globals
 install_rust
+install_browser_tools
 install_wt_settings
 import_wt_themes
 configure_wsl_terminal_profile

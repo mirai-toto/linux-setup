@@ -33,7 +33,8 @@ cd ~/linux-setup
 4. Clones [dotfiles](https://github.com/mirai-toto/dotfiles) to `~/dotfiles` and runs its `install.sh`
 5. Installs npm global packages
 6. Installs Rust toolchain via rustup
-7. **(WSL only)** Installs and configures Windows Terminal via [wt-settings](https://github.com/mirai-toto/wt-settings)
+7. Clones [browser-tools](https://github.com/mirai-toto/browser-tools) next to this repository and links `~/.local/bin/btools` (then run `btools setup`)
+8. **(WSL only)** Installs and configures Windows Terminal via [wt-settings](https://github.com/mirai-toto/wt-settings)
 
 After install, restart your terminal or run `exec zsh`.
 
