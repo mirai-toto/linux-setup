@@ -33,10 +33,12 @@ cd ~/linux-setup
 4. Clones [dotfiles](https://github.com/mirai-toto/dotfiles) to `~/dotfiles` and runs its `install.sh`
 5. Installs npm global packages
 6. Installs Rust toolchain via rustup
-7. Clones [browser-tools](https://github.com/mirai-toto/browser-tools) next to this repository and links `~/.local/bin/btools` (then run `btools setup`)
+7. Clones [browser-tools](https://github.com/mirai-toto/browser-tools) next to this repository and runs its installer unattended for both OpenCode and Claude Code: Playwright on Linux, plus Windows Chrome on WSL
 8. **(WSL only)** Installs and configures Windows Terminal via [wt-settings](https://github.com/mirai-toto/wt-settings)
 
 After install, restart your terminal or run `exec zsh`.
+
+To use Windows Chrome tabs, install the Playwright Chrome extension and approve access when you first connect; Chrome does not need to be open during setup (see [browser-tools](https://github.com/mirai-toto/browser-tools#windows-chrome-existing-tabs-and-logins)).
 
 ---
 
