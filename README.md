@@ -9,7 +9,6 @@ This repo sets up:
 - 🐧 **Distro dependencies** — build tools and locale per distro
 - 🍺 **Homebrew** — installs and initializes Homebrew
 - 🐚 **dotfiles** — clones and runs `dotfiles/install.sh`
-- 🦀 **Rust** — toolchain via rustup
 - 📦 **npm globals** — commitlint
 - 🪟 **Windows Terminal** — auto-configured when running under WSL
 
@@ -29,12 +28,10 @@ cd ~/linux-setup
 
 1. Detects the distro and installs build dependencies
 2. Configures locale (`en_US.UTF-8`)
-3. Installs Homebrew
-4. Clones [dotfiles](https://github.com/mirai-toto/dotfiles) to `~/dotfiles` and runs its `install.sh`
-5. Installs npm global packages
-6. Installs Rust toolchain via rustup
-7. Clones [browser-tools](https://github.com/mirai-toto/browser-tools) next to this repository and runs its installer unattended for both OpenCode and Claude Code: Playwright on Linux, plus Windows Chrome on WSL
-8. **(WSL only)** Installs and configures Windows Terminal via [wt-settings](https://github.com/mirai-toto/wt-settings)
+3. Clones [dotfiles](https://github.com/mirai-toto/dotfiles) next to this repository and runs its `install.sh`
+4. Installs npm global packages
+5. Clones [browser-tools](https://github.com/mirai-toto/browser-tools) next to this repository and runs its installer unattended for both OpenCode and Claude Code: Playwright on Linux, plus Windows Chrome on WSL
+6. **(WSL only)** Installs and configures Windows Terminal via [wt-settings](https://github.com/mirai-toto/wt-settings)
 
 After install, restart your terminal or run `exec zsh`.
 

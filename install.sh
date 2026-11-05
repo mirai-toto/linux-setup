@@ -4,7 +4,6 @@ SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 source "$SCRIPT_DIR/distro/detect.sh"
 
-
 DISTRO_SCRIPT="$SCRIPT_DIR/distro/${DISTRO_ID}/setup.sh"
 if [ -f "$DISTRO_SCRIPT" ]; then
   source "$DISTRO_SCRIPT"
@@ -30,15 +29,6 @@ setup_dotfiles() {
 install_npm_globals() {
   echo "Installing npm global packages..."
   npm install -g @commitlint/config-conventional
-}
-
-install_rust() {
-  echo "Installing Rust toolchain via rustup..."
-  if [ ! -d "$HOME/.cargo/bin" ]; then
-    "$(brew --prefix rustup)/bin/rustup" default stable
-  else
-    echo "Rust toolchain already installed."
-  fi
 }
 
 install_browser_tools() {
@@ -120,7 +110,6 @@ install_build_deps
 configure_locale
 setup_dotfiles
 install_npm_globals
-install_rust
 install_browser_tools
 install_wt_settings
 import_wt_themes
