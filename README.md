@@ -67,14 +67,3 @@ This builds the image for the target distro and drops you into an interactive sh
 ## 🪟 Windows Terminal
 
 Auto-configured during install when running under WSL, via [wt-settings](https://github.com/mirai-toto/wt-settings). Color scheme files live in `themes/`.
-
----
-
-## ⚠️ After install checklist
-
-These files are created by `dotfiles/install.sh` with empty values — don't forget to fill them in:
-
-| File | What to fill in |
-| ---- | --------------- |
-| `~/.gitconfig.local` | `name` and `email` for git commits |
-| `~/.secrets` | API keys and other secrets |

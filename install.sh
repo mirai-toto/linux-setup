@@ -103,9 +103,6 @@ configure_wsl_terminal_profile() {
 
 print_completion_message() {
   echo "Setup complete."
-  echo -e "\033[33mDon't forget to fill in:\033[0m"
-  echo -e "  - \033[33m~/.gitconfig.local\033[0m  (git name and email)"
-  echo -e "  - \033[33m~/.secrets\033[0m           (API keys and other secrets)"
   if [ -n "${WSL_DISTRO_NAME:-}" ]; then
     echo -e "\033[33mTo use Windows Chrome tabs, install the Playwright Chrome extension and approve access when connecting.\033[0m"
   fi
