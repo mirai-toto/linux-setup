@@ -24,6 +24,15 @@ setup_dotfiles() {
     echo "dotfiles already cloned."
   fi
   bash "$dotfiles_dir/install.sh"
+  load_dotfiles_env
+}
+
+# dotfiles/install.sh runs in a child shell, so its PATH changes don't reach us.
+load_dotfiles_env() {
+  if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+  export PATH="$HOME/.local/bin:$PATH"
 }
 
 install_npm_globals() {
